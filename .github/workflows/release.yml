@@ -23,7 +23,7 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
         with:
-          github_token: ${{ secrets.RELEASE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           custom_tag: ${{ steps.read_toml.outputs.value }}
 
       - name: Create a GitHub release

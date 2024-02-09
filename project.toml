@@ -1,6 +1,6 @@
 [project]
-name = "plugin-name"
+name = "code-link.nvim"
 version = "0.0.1"
-description = "description"
+description = "Neovim plugin that make sharing code location easier written in Lua"
 author = "Mist"
 email = "mist.zzh@gmail.com"

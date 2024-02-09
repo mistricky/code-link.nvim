@@ -14,6 +14,8 @@ jobs:
 
       - name: Setup python
         uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' 
 
       - name: Replace template
         run: python3 scripts/replace-template.py

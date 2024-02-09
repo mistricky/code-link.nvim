@@ -12,6 +12,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup python
+        uses: actions/setup-python@v5
+
+      - name: Replace template
+        run: python3 scripts/replace-template.py
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: '[Update] apply template'
+
       - name: Read version from project config
         id: read_toml
         uses: SebRollen/toml-action@v1.0.2

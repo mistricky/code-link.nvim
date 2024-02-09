@@ -1,4 +1,4 @@
-**plugin-name.txt** make share code location easier
+**plugin-name** description 
 
-Author: mistricy (Mist) <mist.zzh@gmail.com>
-version: 0.0.1
+Author: Mist <mist.zzh@gmail.com>
+version: 0.0.1 

@@ -3,12 +3,14 @@ local command_util = require("code-link.utils.command")
 local string_util = require("code-link.utils.string")
 local CodeLink = {}
 
-local function line(num)
+local function github_line(num)
 	return "L" .. num
 end
 
-function CodeLink.new()
-	local instance = {}
+function CodeLink.new(config)
+	local origin = CodeLink.get_git_origin(config)
+	local branch_name = string_util.trim(command_util.exec_command("git branch --show-current", "r"))
+	local instance = { branch_name = branch_name, origin = origin }
 
 	setmetatable(instance, {
 		__index = CodeLink,
@@ -17,15 +19,14 @@ function CodeLink.new()
 	return instance
 end
 
-function CodeLink:get_git_origin(config)
-	if not config.origin == nil then
-		self.origin = config.origin
-		return
+function CodeLink.get_git_origin(config)
+	if config.origin ~= nil then
+		return config.origin
 	end
 
 	local origin = string_util.trim(command_util.exec_command("git config --get remote.origin.url", "r"))
 
-	self.origin = string_util.ends_with(origin, "/") and origin:sub(1, -2) or origin
+	return (string_util.ends_with(origin, "/") and origin:sub(1, -2) or origin) .. "/blob/"
 end
 
 function CodeLink.get_current_file_path()
@@ -35,19 +36,28 @@ function CodeLink.get_current_file_path()
 	return full_file_path:gsub(string_util.escape(cwd), "")
 end
 
-function CodeLink:create_line_param()
-	local selection = Selection.new()
+function CodeLink.get_file_path_with_cwd()
+	local full_file_path = vim.fn.expand("%:p")
+	local cwd = vim.fn.getcwd()
 
-	return selection.line_start == selection.line_end and line(selection.line_start)
-		or line(selection.line_start) .. "-" .. line(selection.line_end)
+	return full_file_path:gsub(string_util.escape(cwd), "")
 end
 
-function CodeLink:create_link()
-	self.branch_name = string_util.trim(command_util.exec_command("git branch --show-current", "r"))
+function CodeLink.create_line_param(line_formatter, separator)
+	local selection = Selection.new()
 
+	return selection.line_start == selection.line_end and line_formatter(selection.line_start)
+		or line_formatter(selection.line_start) .. separator .. line_formatter(selection.line_end)
+end
+
+function CodeLink:create_link(branch_name)
 	local path = CodeLink.get_current_file_path()
 
-	return self.origin .. "/blob/" .. self.branch_name .. path .. "?plain=1#" .. CodeLink:create_line_param()
+	return self.origin
+		.. (branch_name ~= "" and branch_name or self.branch_name)
+		.. path
+		.. "?plain=1#"
+		.. CodeLink.create_line_param(github_line, "-")
 end
 
 return CodeLink

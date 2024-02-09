@@ -1,0 +1,4 @@
+**code-link.nvim** Neovim plugin that make sharing code location easier written in Lua 
+
+Author: Mist <mist.zzh@gmail.com>
+version: 0.0.1 

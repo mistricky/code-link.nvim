@@ -1,11 +1,12 @@
 local code_link = require("code-link")
+local clipboard = require("code-link.clipboard")
 
-vim.api.nvim_create_user_command("CodeLink", function()
+vim.api.nvim_create_user_command("CodeLink", function(args)
+	local branch_name = args.args
 	local link = code_link.link()
+	local generated_link = link:create_link(branch_name)
 
-	link:get_git_origin({})
-
-	local generated_link = link:create_link()
+	clipboard.copy_or(generated_link)
 
 	vim.notify(generated_link)
-end, {})
+end, { nargs = "*" })

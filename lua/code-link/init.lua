@@ -7,7 +7,7 @@ function main.setup(config)
 end
 
 function main.link()
-	return CodeLink.new()
+	return CodeLink.new(static.config)
 end
 
 return main

@@ -4,12 +4,20 @@
 <p align="center">
   <b align="center">🔗 Code-link.nvim</b>
   <p align="center">Neovim plugin that make sharing code location easier written in Lua</p>
+
   
- ![CI](https://github.com/mistricky/code-link.nvim/actions/workflows/release.yml/badge.svg)
-[![Version](https://img.shields.io/github/v/release/mistricky/code-link.nvim)](https://github.com/mistricky/code-link.nvim/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  
+ <p align="center">
+	 <img src="https://github.com/mistricky/code-link.nvim/actions/workflows/release.yml/badge.svg" /> 
+  <img src="https://img.shields.io/github/v/release/mistricky/code-link.nvim" /> 
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" /> 
+ </p>
 
 </p>
+
+
+https://github.com/mistricky/code-link.nvim/assets/22574136/e894d016-1829-419f-bb28-3db588edbd0c
+
 
 ## Installation
 It is suggested to either use the latest release tag

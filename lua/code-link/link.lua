@@ -9,6 +9,7 @@ end
 
 function CodeLink.new(config)
 	local origin = CodeLink.get_git_origin(config)
+    origin = CodeLink.convert_git_origin(origin)
 	local branch_name = string_util.trim(command_util.exec_command("git branch --show-current", "r"))
 	local instance = { branch_name = branch_name, origin = origin }
 
@@ -17,6 +18,12 @@ function CodeLink.new(config)
 	})
 
 	return instance
+end
+
+-- @type origin string
+function CodeLink.convert_git_origin(origin)
+    origin = origin:gsub("%.git", "")
+    return origin:gsub("git@([^:]+):([^/]+)/(.+)", "https://%1/%2/%3")
 end
 
 function CodeLink.get_git_origin(config)
@@ -30,10 +37,12 @@ function CodeLink.get_git_origin(config)
 end
 
 function CodeLink.get_current_file_path()
-	local full_file_path = vim.fn.expand("%:p")
-	local cwd = vim.fn.getcwd()
+    local full_file_path = vim.fn.expand("%:p")
 
-	return full_file_path:gsub(string_util.escape(cwd), "")
+    -- use this instead of cwd to account for files outside of root git directory
+    local git_wd = string_util.trim(command_util.exec_command("git rev-parse --show-toplevel", "r"))
+
+    return full_file_path:gsub(string_util.escape(git_wd), "")
 end
 
 function CodeLink.get_file_path_with_cwd()

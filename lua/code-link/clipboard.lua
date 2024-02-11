@@ -2,7 +2,7 @@ local static = require("code-link.static")
 local ClipBoard = {}
 
 function ClipBoard.copy_or(content)
-	if static.config.copy_command == nil then
+	if static.config == nil or static.config.copy_command == nil then
 		return
 	end
 

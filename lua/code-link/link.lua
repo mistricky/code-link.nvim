@@ -20,7 +20,7 @@ function CodeLink.new(config)
 end
 
 function CodeLink.get_git_origin(config)
-	if config.origin ~= nil then
+	if config ~= nil and config.origin ~= nil then
 		return config.origin
 	end
 

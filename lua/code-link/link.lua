@@ -27,7 +27,7 @@ function CodeLink.convert_git_origin(origin)
 end
 
 function CodeLink.get_git_origin(config)
-	if config ~= nil and config.origin ~= nil then
+	if config.origin ~= nil then
 		return config.origin
 	end
 

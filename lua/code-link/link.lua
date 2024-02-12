@@ -8,8 +8,7 @@ local function github_line(num)
 end
 
 function CodeLink.new(config)
-	local origin = CodeLink.get_git_origin(config)
-    origin = CodeLink.convert_git_origin(origin)
+	local origin = CodeLink.convert_git_origin(CodeLink.get_git_origin(config))
 	local branch_name = string_util.trim(command_util.exec_command("git branch --show-current", "r"))
 	local instance = { branch_name = branch_name, origin = origin }
 
